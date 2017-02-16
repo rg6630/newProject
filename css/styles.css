@@ -1,0 +1,31 @@
+body, html {
+    height: 100%;
+}
+
+.footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #f4f2f2;
+	border: 1px solid #ddd;
+}
+
+.panel-heading {
+	background: #f4f2f2!important;
+	color: #000000!important;
+}
+
+.btn-purple {
+	background: #f4f2f2!important;
+	color: #000000!important;
+}
+
+.floatRight{
+	float: right;
+	width: 48%;
+}
+.floatLeft{
+	float: left;
+	width: 48%;
+}

@@ -1,0 +1,164 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-5 text-right">
+			<img src="images/1414483782_0006_Weather.png"/>
+        </div>
+    	<div class="col-lg-7 text-left">
+        	<h1 style="color: #000000; font-family: Cambria;">Weather App</h1>
+        </div>
+    </div>
+    <br /><br />	
+	<div class="row text-center">
+		<div class="col-lg-3">
+        </div>
+        <div class="col-lg-6 text-center">
+        	<nav class="navbar navbar-default" role="navigation">
+			  <div class="container-fluid">
+				<div class="navbar-header">
+				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+                  <a class="navbar-brand" href="#">Weather App</a> 
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    				<ul class="nav navbar-nav">
+    					<li><a href="#/">Home</a></li>
+    					<li class="active"><a href="#/moreInfo/{{location}}">View More Information</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li ><a>{{locationKeyword}}, {{forecastInfo.city.country}}</a></li>
+				    </ul>
+				</div>
+			  </div>
+			</nav>
+        </div>
+        <div class="col-lg-3">
+        </div>
+	</div>
+	<br /><br />
+
+<div class="panel panel-default floatLeft">
+  <div class="panel-heading">
+    <h3 class="panel-title">Cloud Map <small>(please be patient while the map is being loaded)</small></h3>
+  </div>
+  <div class="panel-body">
+        <div>
+            <div id="basicMap" style= "width: 100%; height: 500px; border: 1px solid #aaa;">
+            </div>
+        </div>
+  </div>
+</div>
+
+<div class="panel panel-default floatRight">
+  <div class="panel-heading">
+    <h3 class="panel-title">Weather Information for {{locationKeyword}}, {{forecastInfo.city.country}}</h3>
+  </div>
+  <div class="panel-body">
+        
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Current Weather - {{forecastInfo.list[0].dt | dateFilter}}
+                </div>
+                <div class="panel-body">
+                    <p> 
+                        <img ng-src = "{{iconSrcURL}}{{forecastInfo.list[0].weather[0].icon}}.png" />
+                        {{forecastInfo.list[0].temp.day-273.15 | number:2}}&deg;C
+                        {{forecastInfo.list[0].weather.main}}
+                    </p>
+                    <p>
+                        Weather: {{forecastInfo.list[0].weather.description}} ~ 
+                        High: {{forecastInfo.list[0].temp.max-273.15 | number:2}}&deg;C ~ 
+                        Low: {{forecastInfo.list[0].temp.min-273.15 | number:2}}&deg;C
+                    </p>
+                </div>
+                <div class="panel-footer">
+                    <small>
+                        Day: {{forecastInfo.list[0].temp.day-273.15 | number:2}}&deg;C ~ 
+                        Night: {{forecastInfo.list[0].temp.night-273.15 | number:2}}&deg;C ~ 
+                        Humidity: {{forecastInfo.list[0].humidity}}% ~
+                        Pressure: {{forecastInfo.list[0].pressure}} hPa ~
+                        Wind: {{forecastInfo.list[0].speed}} m/s {{forecastInfo.list[0].deg}}&deg;
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3 style="color: #000; font-family: 'Trebuchet MS';">Weather Forecast for next 3 days:</h3>
+    <br />
+    <div class="row" ng-show="noForecastInfo == false">
+        <div class="col-lg-4" ng-repeat="i in [1, 2, 3]">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{forecastInfo.list[i].dt | dateFilter}}
+                </div>
+                <div class="panel-body">
+                    <p> 
+                        <img ng-src = "{{iconSrcURL}}{{forecastInfo.list[i].weather[0].icon}}.png" />
+                        {{forecastInfo.list[i].temp.day-273.15 | number:2}}&deg;C
+                        {{forecastInfo.list[i].weather.main}}
+                    </p>
+                    <p>
+                        Weather: {{forecastInfo.list[i].weather.description}} ~ 
+                        High: {{forecastInfo.list[i].temp.max-273.15 | number:2}}&deg;C ~ 
+                        Low: {{forecastInfo.list[i].temp.min-273.15 | number:2}}&deg;C
+                    </p>
+                </div>
+                <div class="panel-footer">
+                    <small>
+                        Day: {{forecastInfo.list[i].temp.day-273.15 | number:2}}&deg;C ~ 
+                        Night: {{forecastInfo.list[i].temp.night-273.15 | number:2}}&deg;C ~ 
+                        Humidity: {{forecastInfo.list[i].humidity}}% ~
+                        Pressure: {{forecastInfo.list[i].pressure}} hPa ~
+                        Wind: {{forecastInfo.list[i].speed}} m/s {{forecastInfo.list[0].deg}}&deg;
+                    </small>
+                </div>
+            </div>
+        </div>
+        <p ng-show="noForecastInfo == true"><i>No forecast information is available for City: {{locationKeyword}}</i></p>
+    </div>
+    
+    <h3 style="color: #000; font-family: 'Trebuchet MS';">Historic Data for last day:</h3>
+    <br />
+    <div class="row" ng-show="noHistoricData == false">
+        <div class="col-lg-4" ng-repeat="i in [0]">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{historicData.list[i].dt | dateFilter}}
+                </div>
+                <div class="panel-body">
+                    <p> 
+                        <img ng-src = "{{iconSrcURL}}{{historicData.list[i].weather[0].icon}}.png" />
+                        {{historicData.list[i].main.temp-273.15 | number:2}}&deg;C
+                        {{historicData.list[i].weather[0].main}}
+                    </p>
+                    <p>
+                        Weather: {{historicData.list[i].weather[0].description}} ~ 
+                        High: {{historicData.list[i].main.temp_max-273.15 | number:2}}&deg;C ~ 
+                        Low: {{historicData.list[i].main.temp_min-273.15 | number:2}}&deg;C
+                    </p>
+                </div>
+                <div class="panel-footer">
+                    <small>
+                        Humidity: {{historicData.list[i].main.humidity}}% ~
+                        Pressure: {{historicData.list[i].main.pressure}} hPa ~
+                        Wind: {{historicData.list[i].wind.speed}} m/s {{historicData.list[0].wind.deg}}&deg;
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p ng-show="noHistoricData == true"><i>No historic data is available for City: {{locationKeyword}}</i></p>
+
+  </div>
+</div>
+	
+    <div class="row text-center footer">
+    	<h6>Weather App by Rahul Gupta. All Rights Reserved. Weather Data and Maps by <a href="http://openweathermap.org/">OpenWeatherMap</a></h6>
+    </div>
+	<br /><br /><br />
+</div>

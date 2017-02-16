@@ -1,0 +1,105 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-5 text-right">
+			<img src="images/1414483782_0006_Weather.png"/>
+        </div>
+    	<div class="col-lg-7 text-left">
+        	<h1 style="color: #000000; font-family: Cambria;">Weather App</h1>
+        </div>
+    </div>
+    <br /><br />
+	<div class="row">
+		<div class="col-lg-3">
+        </div>
+        <div class="col-lg-6">
+        		<div class="alert alert-warning alert-dismissible" role="alert" ng-show="emptyLocation == true">
+					Please enter a city name to begin your search
+				</div>
+        </div>
+        <div class="col-lg-3">
+        </div>
+	</div>
+	<div class="row">
+		<div class="col-lg-3">
+        </div>
+        <div class="col-lg-6 text-center">
+        	<nav class="navbar navbar-default" role="navigation">
+			  <div class="container-fluid">
+				<div class="navbar-header navbar-center">
+				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button> 
+                  <a class="navbar-brand" href="#">Weather App</a> 
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				  <ul class="nav navbar-nav">
+					<li class="active"><a href="#/">Home</a></li>
+					<li><a href="" ng-click="viewMoreInfo()">View More Information</a></li>
+				  </ul>
+				  <form class="navbar-form navbar-right" role="search">
+					<div class="form-group">
+					  <input type="text" class="form-control" placeholder="Enter city name" ng-model="location" ng-change="clearWeatherDetails()">
+					</div>
+					<button type="submit" class="btn btn-purple" ng-click="getWeather()">Search!</button>
+				  </form>
+				</div>
+			  </div>
+			</nav>
+        </div>
+        <div class="col-lg-3">
+        </div>
+	</div>
+    <br /><br />
+    <div class="row" ng-show="search == true">
+        <div class="col-lg-3">
+        </div>
+        <div class="col-lg-6">
+        	<div class="panel panel-default">
+            	<div class="panel-heading">
+                	Current Weather for {{locationKeyword}}, {{sys.country}} - {{date | dateFilter}}
+                </div>
+                <div class="panel-body">
+                	<p> 
+                    	<img ng-src = "{{iconSrcURL}}{{basicWeatherInfo.icon}}.png" />
+                        {{temperature.temp-273.15 | number:2}}&deg;C
+                    	{{basicWeatherInfo.main}}
+                    </p>
+                    <p>
+                    	Weather: {{basicWeatherInfo.description}} ~ 
+                        High: {{temperature.temp_max-273.15 | number:2}}&deg;C ~ 
+                        Low: {{temperature.temp_min-273.15 | number:2}}&deg;C
+                    </p>
+                </div>
+            </div>
+			<button type="button" class="btn btn-purple" ng-click="addToFavourites()">Add to Favourites</button>
+        </div>
+        <div class="col-lg-3">
+        </div>
+    </div>
+	<br /> <br />
+	<div class="row">
+		<div class="col-lg-3">
+		</div>
+		<div class="col-lg-6">
+			<div class="alert alert-warning alert-dismissible" role="alert" ng-show="alreadyInFavourites == true">
+				{{location}} is already in your favourites
+			</div>
+			<h3> Your Favourite Locations:</h3>
+			<ul class="list-group">
+				<li class="list-group-item" style="cursor: pointer;" ng-repeat="fav in favourites" ng-click="loadFavouritesDetails($index)">{{fav}}
+				<button type="button" class="close" ng-click="removeFromFavourites($index)"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				</li>
+			</ul>
+			<p ng-show="favourites.length == 0"><i>Nothing added to your Favourites</i></p>
+		</div>
+		<div class="col-lg-3">
+		</div>
+	</div>
+	<div class="row text-center footer">
+    	<h6>Weather App by Rahul Gupta. All Rights Reserved. Weather Data and Maps by <a href="http://openweathermap.org/">OpenWeatherMap</a></h6>
+    </div>
+	<br /><br /><br />
+</div>
